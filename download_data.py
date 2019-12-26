@@ -58,7 +58,7 @@ def download_dataraw():
     
 def data_processing(patient_ID, file_list):
 
-    CODE_SHEET = pd.read_csv('code_ocena_12.csv')
+    CODE_SHEET = pd.read_csv('code_ocena_1.csv')
     # find excel files in directry whose name is from the argument(subject)
     def find_data(patient_ID, file_list):   
 
