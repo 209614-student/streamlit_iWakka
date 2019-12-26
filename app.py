@@ -14,7 +14,7 @@ def main():
     create_layout()
     
 def load_homepage() -> None:
-    st.image("/home/anna/niemoje/streamlit_guide/iwakka.png",
+    st.image("https://github.com/209614-student/streamlit_iWakka/blob/master/iwakka.png",
              use_column_width=True)
     st.markdown("> It' s a dashboard do analize data!")
     st.write("Hello! This dashboard will help you to analize data from our device iWakka "
