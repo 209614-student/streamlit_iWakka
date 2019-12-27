@@ -41,10 +41,10 @@ def download_dataraw():
                     fileName = part.get_filename()
     
                     if bool(fileName):
-                        filePath = os.path.join(detach_dir, 'iwakka_data', fileName)
+                        filePath = os.path.join(detach_dir, 'dziwne', fileName)
                         if not os.path.isfile(filePath) :
                             print (fileName)
-			    st.write(fileName)
+                            st.write(fileName)
                             fp = open(filePath, 'wb')
                             fp.write(part.get_payload(decode=True))
                             fp.close()
