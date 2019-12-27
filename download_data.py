@@ -1,81 +1,99 @@
+# -*- coding: utf-8 -*-
+
 import email
-import getpass
 import imaplib
 import os
 import sys
-import pandas as pd
 import streamlit as st
-import numpy as np
-
-
-file_list = []
 
 def download_dataraw():
     userName = 'sterowanierobotow2@gmail.com'
     passwd = 'IloveiWakka!!!'
-
+     #   directory = '/home/anna'      
+    detach_dir = '.'
+    if 'iwakka_data' not in os.listdir(detach_dir):
+        os.mkdir('iwakka_data') 
+    
     try:
         imapSession = imaplib.IMAP4_SSL('imap.gmail.com')
         typ, accountDetails = imapSession.login(userName, passwd)
         if typ != 'OK':
-            st.write('Not able to sign in!')
             raise
-
+    
         imapSession.select('Inbox')
         typ, data = imapSession.search(None, 'ALL')
         if typ != 'OK':
-            st.write('Error searching Inbox.')
+            
             raise
-        
+       
         for msgId in data[0].split():
             typ, messageParts = imapSession.fetch(msgId, '(RFC822)')
-
+     
             emailBody = messageParts[0][1]
             mail = email.message_from_bytes(emailBody)
             subject = mail['subject']
-            if subject.find('tch') > -1:
+            if subject.find('tch')   > -1:
                 for part in mail.walk():
                     if part.get_content_maintype() == 'multipart':
                         continue
                     if part.get('Content-Disposition') is None:
                         continue
-
                     fileName = part.get_filename()
-                    global life_list
-                    file_list.append(fileName)
-                    
-                    print (fileName)
-                    st.write(fileName)
-        print ('Done')
-
+    
+                    if bool(fileName):
+                        filePath = os.path.join(detach_dir, 'iwakka_data', fileName)
+                        if not os.path.isfile(filePath) :
+                            print (fileName)
+                            fp = open(filePath, 'wb')
+                            fp.write(part.get_payload(decode=True))
+                            fp.close()
+        imapSession.close()
+        imapSession.logout()
+    
+        st.write ('Done')
+        st.write ('Data has downloaded! Now you can press the button below to start processing them!')
+        
+    #def process_data():
     
     except :
-        print ('Not able to download all attachments.')
+        st.write ('Not able to download all attachments.')
         
-        return file_list
+ 
+import pandas as pd
+import os
+import glob
+import numpy as np
+import streamlit as st
 
-    
-    
-def data_processing(patient_ID, file_list):
-
-    CODE_SHEET = pd.read_csv('code_ocena_1.csv')
+import numpy as np
+import numpy as np
+def data_processing(patient_ID): 
+    os.chdir('iwakka_data')
+    CODE_SHEET = pd.read_csv('https://raw.githubusercontent.com/209614-student/streamlit_iWakka/master/code_ocena_1.csv')
     # find excel files in directry whose name is from the argument(subject)
-    def find_data(patient_ID, file_list):   
+    def find_data(patient_ID):
+        # find .xlsx in path
+        path='iwakka_data/*'
+    
+        files = glob.glob(path)
 
-        res = list(filter(lambda x: patient_ID in x, file_list)) 
-
-    # printing result  
-#        print ("All strings with given substring are : " + str(res))
-
+        file_list = []
+        for i, file_name in enumerate(files):
+            file_list.append(file_name)
+            file_list=sorted(file_list)
+            
+            
         result_sheets = []
         for file_path in file_list:
             if  file_path.find(str(patient_ID)) > -1: 
                 result_sheet = pd.read_csv(file_path )
                 result_sheets.append(result_sheet )
-
+    
 
         return result_sheets
-
+    
+    result_sheets=find_data(str(patient_ID))
+        
     def computed(result_sheet):
         deviation = abs(result_sheet['value[g]'] - result_sheet['target[g]'])
         sampling_time = []
@@ -85,14 +103,14 @@ def data_processing(patient_ID, file_list):
                 sampling_time.append(result_sheet['time[s]'][i+1]-result_sheet['time[s]'][i])
                 previous_time = result_sheet['time[s]'][i]
         sampling_time.append(0)
-
+    
         error_area = []
         for i in result_sheet['time[s]'].index:
             if i < 1300:
                 error_area.append((deviation[i+1] + deviation[i])/2*sampling_time[i])
-
+                
         error_area.append(0)
-
+        
         evaluation = {'IC':0, 'CC1':0, 'CC2':0, 'CC3':0, 'CC4':0, 'CC5':0, 'CC6':0, 'CC7':0, 'CC8':0, 'CC9':0, 'CC10':0, 'EC1':0, 
                  'EC2':0, 'EC3':0, 'EC4':0, 'EC5':0, 'EC6':0, 'EC7':0, 'EC8':0, 'EC9':0, 'EC10':0, 'Total':0}
         for i in result_sheet['time[s]'].index:
@@ -166,34 +184,39 @@ def data_processing(patient_ID, file_list):
         for eval_unit in evaluation:
             if eval_unit != 'IC' and eval_unit != 'Total':
                 evaluation[eval_unit] = evaluation[eval_unit]/3
-
+                
         return evaluation
-
-    y=[]
-    Y1=[]
+    
+    
     def nwm():
-        result_scheets = find_data(patient_ID, file_list)
-        for i in result_scheets:
+        y=[]
+        Y1=[]
+#       result_scheets= find_data(str(patient_ID ))
+        for i in result_sheets:
             a=computed(i)['Total']
             a=np.round(a,3)
             y.append(a)
             Y1=[i for i in range(1,(len(y)+1))]  
+        return y, Y1, patient_ID
+    
+    y, Y1, patient_ID= nwm()
+      
+ 
+    data = dict()
+    for x in range(1,len(y)):
+        data['day %i'%x]=y[x-1]
+  
+      
+    # Creates padas DataFrame by passing  
+    # Lists of dictionaries and row index. 
+    df = pd.DataFrame(data, index =    [patient_ID]              )
+      
+    with open('document.csv','a') as fd:
+        df.to_csv(fd, header=False)
 
-        data = dict()
-        for x in range(1,len(y)):
-            data['day %i'%x]=y[x-1]
-
-
-        # Creates padas DataFrame by passing  
-        # Lists of dictionaries and row index. 
-        df = pd.DataFrame(data, index =    [patient_ID]              )
-        return df
-
-    df = nwm()
-    return df
 
 def download_data():
-
+#    data = pd.read_csv("reka_chora.csv")
     st.header(" It's actually first step to start process data of your patient.")
     st.header(" Just follow the instruction!")
     st.markdown("Hi! It's fisrt step! Just click the bottom below and download data!")
@@ -203,15 +226,15 @@ def download_data():
     st.write ('Atfter downloading data, you can press the button below to start processing them!')
     add=st.text_input('dodaj ID')
     
-    patient_ID = ['BKZI','ZPZI','HKZI','BBZI','SBZI','DMCZ','JRCZ','JKCZ']
-    patient_ID.append(add)
+    ID = ['BKZI','ZPZI','HKZI','BBZI','SBZI','DMCZ','JRCZ','JKCZ']
+    ID.append(add)
     option = st.selectbox(
-            'Which patient would you like to choose?',patient_ID
+            'Which patient would you like to choose?',ID
     )
-    for i in patient_ID:
+    for i in ID:
         if option == i:
             patient_ID = i
             button2 = st.button('START PROCESSING DATA')
             if button2:
-                data_processing(patient_ID,file_list)
+                data_processing(patient_ID)
 
