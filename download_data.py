@@ -11,8 +11,8 @@ def download_dataraw():
     passwd = 'IloveiWakka!!!'
      #   directory = '/home/anna'      
     detach_dir = '.'
-    if 'iwakka_data' not in os.listdir(detach_dir):
-        os.mkdir('iwakka_data') 
+    if 'dziwne' not in os.listdir(detach_dir):
+        os.mkdir('dziwne') 
     
     try:
         imapSession = imaplib.IMAP4_SSL('imap.gmail.com')
@@ -44,6 +44,7 @@ def download_dataraw():
                         filePath = os.path.join(detach_dir, 'iwakka_data', fileName)
                         if not os.path.isfile(filePath) :
                             print (fileName)
+			    st.write(fileName)
                             fp = open(filePath, 'wb')
                             fp.write(part.get_payload(decode=True))
                             fp.close()
@@ -73,7 +74,7 @@ def data_processing(patient_ID):
     # find excel files in directry whose name is from the argument(subject)
     def find_data(patient_ID):
         # find .xlsx in path
-        path='iwakka_data/*'
+        path='dziwne/*'
     
         files = glob.glob(path)
 
