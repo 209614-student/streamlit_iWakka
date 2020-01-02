@@ -2,7 +2,7 @@
 
 import streamlit as st
 #import checkboc_pacjenci
-#import leyer
+import leyer
 import text_input
 import numpy as np
 #import untitled0

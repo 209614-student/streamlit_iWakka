@@ -7,19 +7,19 @@ import numpy as np
 
 
 def download_data(): 
-    reka_chora= pd.read_csv('https://raw.githubusercontent.com/209614-student/streamlit_iWakka/master/document.csv')
-   # reka_zdrowa = 
-    st.write('Data', reka_chora)
+    st.header(" It's actually first step to start process data of your patient.")
+    st.markdown("Hi! It's fisrt step! Just click the bottoms below and download data!")
+    button =st.button('START DOWNLOAD DATA')
+    if button:
+       reka_chora= pd.read_csv('https://raw.githubusercontent.com/209614-student/streamlit_iWakka/master/document.csv')
+       reka_zdrowa =  pd.read_csv('https://raw.githubusercontent.com/209614-student/streamlit_iWakka/master/document1.csv')
+       st.write('Data for ill hand ', reka_chora)
+       st.write('Data for health hand', reka_zdrowa)
 
 """
 def download_data():
-#    data = pd.read_csv("reka_chora.csv")
-    st.header(" It's actually first step to start process data of your patient.")
-    st.header(" Just follow the instruction!")
-    st.markdown("Hi! It's fisrt step! Just click the bottom below and download data!")
-    button =st.button('START DOWNLOAD DATA')
-    if button:
-       download_dataraw() 
+
+
     st.write ('Atfter downloading data, you can press the button below to start processing them!')
     add=st.text_input('dodaj ID')
     
