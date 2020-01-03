@@ -39,8 +39,9 @@ def text_input():
             st.write('Range values:', age3)
             
             age4 = st.slider('How mach {} is tired'.format(i),
-                        0, 100)   
+                        0, 100) 
             st.write('Range values:', age4)
+            
 #            data = {i : [adek]}
 #            data=pd.DataFrame.from_dict(data, orient='columns', dtype=None)
 #            st.show(data)
