@@ -1,5 +1,5 @@
 import altair as alt
-alt.renderers.enable('notebook')
+
 import pandas as pd
 import streamlit as st
 
