@@ -6,7 +6,7 @@ import leyer
 import text_input
 import numpy as np
 #import untitled0
-#import dataex
+import dataex
 import download_data
 #import data_processing
 

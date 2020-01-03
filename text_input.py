@@ -18,7 +18,7 @@ def text_input():
     
     
     ID = ['BKZI','ZPZI','HKZI','BBZI','SBZI','DMCZ','JRCZ','JKCZ']
-    st.show(ID)
+    #st.show(ID)
     option = st.selectbox(
             'Which patient would you like to choose?',ID
     )
