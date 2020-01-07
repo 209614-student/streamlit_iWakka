@@ -36,7 +36,6 @@ def leerer():
             a =   alt.Chart(data).mark_bar().encode(
                             x=alt.Y('day:O', sort = None),
                             y=alt.Y("Wyniki AGF:Q"),
-                            # The highlight will be set on the result of a conditional statement
                             color=alt.condition(
                                     alt.datum.year == 1810,  # If the year is 1810 this test returns True,
                                     alt.value('orange'),     # which sets the bar orange.
