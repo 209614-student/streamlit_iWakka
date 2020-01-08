@@ -1,12 +1,15 @@
-import sys
+#!/usr/bin/env python
+# coding: utf-8
+
+
 import pandas as pd
 import altair as alt  
 import streamlit as st
 import urllib
 
-def leerer():
+def leyer():
     def get_UN_data():
-        df = pd.read_csv('https://raw.githubusercontent.com/209614-student/streamlit_iWakka/master/document.csv')
+        df = pd.read_csv('./data/document1.csv')
         return df.set_index("ID")
     
     try:

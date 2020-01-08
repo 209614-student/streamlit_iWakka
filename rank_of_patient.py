@@ -3,9 +3,9 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 
-def dataex():
+def rank_of_patient():
     def get_UN_data():
-            df = pd.read_csv('https://raw.githubusercontent.com/209614-student/streamlit_iWakka/master/document.csv')
+            df = pd.read_csv('./data/document1.csv')
             df['Total']=df.sum(axis = 1, skipna = True)
             return df.set_index("ID")
         
