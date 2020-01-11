@@ -1,20 +1,16 @@
-#!/usr/bin/env python
-# coding: utf-8
-
+# -*- coding: utf-8 -*-
 
 import pandas as pd
 import altair as alt  
 import streamlit as st
 
-def leyer():
-    def get_UN_data():
+def leyer() -> None:
+    def get_UN_data() -> None :
         df = pd.read_csv('./data/document1.csv')
         return df.set_index("ID")
 
     df = get_UN_data()
-
-    
-    
+   
     mode = st.selectbox("Please select ID", list(df.index))
     for i in list(df.index):
         if mode == i:

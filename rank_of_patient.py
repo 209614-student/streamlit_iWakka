@@ -1,5 +1,7 @@
-import altair as alt
+# -*- coding: utf-8 -*-
 
+
+import altair as alt
 import pandas as pd
 import streamlit as st
 
@@ -9,17 +11,8 @@ def rank_of_patient():
             df['Total']=df.sum(axis = 1, skipna = True)
             return df.set_index("ID")
         
-    try:
-        df = get_UN_data()
-    except urllib.error.URLError as e:
-        st.error(
-            """
-            **This demo requires internet access.**
-    
-            Connection error: %s
-        """
-            % e.reason
-        )
+    df = get_UN_data()
+
     
     countries = st.multiselect(
         "Choose ID", list(df.index), ['HKZI', 'BBZI', 'BKZI','MAMCZ','SBZI', 'JRCZ']

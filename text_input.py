@@ -1,21 +1,43 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
+
 import streamlit as st
 import pandas as pd
 
-def text_input():
-
+def text_input() -> None:
+    """ Take some notes about selected patient and specify the level of motivation anf fatigue on a 0-100 scale
+    
+    Returns:
+    -----------
+    
+    Appends row to existing .csv file :
+    |  ID      |  Motivation   |  Tiring   |  Condition     |  Notes          |
+    |  ......  |  ......       |  .....    | .....          |  .....          | 
+    |  ......  |  ......       |  .....    | .....          |  .....          |    
+    |  ......  |  ......       |  .....    | .....          |  .....          |   
+    |  BKZI    |   55          |   30      |   80           |  glasses needed |      
+    
+    
+    
+    """
     
     st.header(" Hello again! In this section you cen provide some notes regarding patient")
     st.markdown("Some notes can be useful for you, it's too hard to remeber all inormation about your patient :)")
     
     
-    ID = ['BKZI','ZPZI','HKZI','BBZI','SBZI','DMCZ','JRCZ','JKCZ']
+    patient_IDs= ['BKZI', 'MAMCZ', 'Anna Dzialak', 'ASCZ', 'BBZI', 'BMCZ', 'KKZI'
+                , 'DMCZ', 'EKZI', 'ELCZ', 'HKZI','JKCZ', 'JRCZ', 'JSCZ' , 
+                  'MBCZ', 'MMCZ', 'MPCZ', 'RKZI', 'SBZI' , 'UNZI', 'ZPZI']
+    a =st.text_input('If list does not contain any ID, you can add it')
+    patient_IDs.append(a)    
+    c =st.checkbox('Show existing patient ID lists')
+    if c:
+        st.show(patient_IDs)
     #st.show(ID)
     option = st.selectbox(
-            'Which patient would you like to choose?',ID
+            'Which patient would you like to choose?',patient_IDs
     )
-    for i in ID:
+    for i in patient_IDs:
         if option == i:
             notes = st.text_input(('You can provide some notes %s')%(i))
 #           ade1= st.slider('How much {} is motivaed?'.format(i))

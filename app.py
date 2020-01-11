@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*--
 
 import streamlit as st
 import leyer
@@ -10,6 +10,11 @@ def main():
     create_layout()
     
 def load_homepage() -> None:
+    """    The homepage is loaded using a combination of .write and .markdown.
+    
+           Contains decription how app works 
+        
+    """
     st.image("https://raw.githubusercontent.com/209614-student/streamlit_iWakka/master/iwakka.png",
              use_column_width=True)
     st.markdown("> It' s a dashboard do analize data!")
@@ -28,9 +33,7 @@ def load_homepage() -> None:
     st.header(" V. You will find rank if patients")
     st.write("You can judge patient condition accroding to provided data")         
   
-def create_layout():
-
-    
+def create_layout() -> None:
 
     st.sidebar.title("Menu")
     app_mode = st.sidebar.selectbox("Please select a page", [' I. Homepage',

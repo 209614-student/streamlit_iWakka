@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import email
 import imaplib
@@ -8,10 +8,23 @@ import pandas as pd
 import glob
 import numpy as np
 
-def download_dataraw():
+def download_dataraw() -> None:
+    """
+    Download data form gmail server into ./data file
+    
+    
+    Returns:
+    -----------
+    fileName : str
+        a list of strings which are name of downloaded .csv file 
+    
+    files 
+        saving .csv files in ./data file
+    
+    """
     st.write("It can be take some minutes")
-    userName = 'sterowanierobotow2@gmail.com'
-    passwd = 'IloveiWakka!!!'
+    userName = 'sterowanierobotow2@gmail.com' #gmail login
+    passwd = 'IloveiWakka!!!' #gmail password
     detach_dir = '.'
     if 'data' not in os.listdir(detach_dir):
         os.mkdir('data') 
@@ -59,7 +72,29 @@ def download_dataraw():
     except :
         st.write ('Not able to download all attachments.')
         
-def data_processing(patient_ID): 
+def data_processing(patient_ID : str) ->str: 
+    """ 
+    Processes data from ./data file to pandas DataFrame format and .csv file
+    
+    
+    Parameters:
+    -----------
+    patient_ID : str
+            The nick of patient
+    
+    Returns:
+    -----------
+    
+    Appends row to existing .csv file :
+    |  ID      |  day1    |  day2    |  day3     |  day4  | ... |  day18  |
+    |  ......  |  ......  |  .....   | .....     |  ..... | ... |  ....   |
+    |  ......  |  ......  |  .....   | .....     |  ..... | ... |  ....   |    
+    |  ......  |  ......  |  .....   | .....     |  ..... | ... |  ....   |  
+    |  BKZI    |  18.34   |  14.14   | 14.16     |  25.55 | ... |  12.13  |  
+    
+    """
+    
+
     st.write("It can be take some minutes")
     CODE_SHEET = pd.read_excel('./data/code_ocena_1.xlsx')
     def find_data(patient_ID):
@@ -82,11 +117,9 @@ def data_processing(patient_ID):
     def computed(result_sheet):
         deviation = abs(result_sheet['value[g]'] - result_sheet['target[g]'])
         sampling_time = []
-#        previous_time = 0
         for i in result_sheet['time[s]'].index:
             if i < 1300:
                 sampling_time.append(result_sheet['time[s]'][i+1]-result_sheet['time[s]'][i])
-#                previous_time = result_sheet['time[s]'][i]
         sampling_time.append(0)
     
         error_area = []
@@ -188,25 +221,24 @@ def data_processing(patient_ID):
     for x in range(1,len(y)):
         data['day %i'%x]=y[x-1]
   
-      
-    # Creates padas DataFrame by passing  
-    # Lists of dictionaries and row index. 
     df = pd.DataFrame(data, index =    [patient_ID]              )
       
     with open('./data/document1.csv','a') as fd:
         df.to_csv(fd, header=False)
 
-def download_data():
+
+def download_data() -> None :
     st.header(" It's actually first step to start process data of your patient.")
     st.header(" Just follow the instruction!")
     st.markdown("Hi! It's fisrt step! Just click the bottom below and download data!")
     button =st.button('START DOWNLOAD DATA')
     if button:
        download_dataraw()
-    st.write ('Atfter downloading data, you can press the button below to start processing them!')   
-    patient_IDs= ['BKZI', 'MAMCZ', 'Anna Dzialak', 'ASCZ', 'BBZI', 'BMCZ'
-     , 'DMCZ', 'EKZI', 'ELCZ', 'HKZI','JKCZ', 'JRCZ', 'JSCZ' , 'KKZI', 
-     'MBCZ', 'MMCZ', 'MPCZ', 'RKZI', 'SBZI' , 'UNZI', 'ZPZI']
+    st.write ('Atfter downloading data, you can press the button below to start processing them!')  
+    
+    patient_IDs= ['BKZI', 'MAMCZ', 'Anna Dzialak', 'ASCZ', 'BBZI', 'BMCZ', 'KKZI'
+                    , 'DMCZ', 'EKZI', 'ELCZ', 'HKZI','JKCZ', 'JRCZ', 'JSCZ' , 
+                      'MBCZ', 'MMCZ', 'MPCZ', 'RKZI', 'SBZI' , 'UNZI', 'ZPZI']
     a =st.text_input('If list does not contain any ID, you can add it')
     patient_IDs.append(a)    
     c =st.checkbox('Show existing patient ID lists')
