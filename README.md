@@ -1,4 +1,5 @@
-## iWakka therapy evaluation app
+
+![Image of wecome subtitles](https://raw.githubusercontent.com/209614-student/streamlit_iWakka/master/iwakka.png)
 
 The purpose of this work is to prepare software for data analysis and results comparison for iWakka hand therapy.
 The iWakka device is intended for training the control of the grip strength of a hand at specific time trajectories. 
