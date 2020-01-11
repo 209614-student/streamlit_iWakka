@@ -12,7 +12,7 @@ def main():
 def load_homepage() -> None:
     """    The homepage is loaded using a combination of .write and .markdown.
     
-           Contains decription how app works 
+           Contains description how app works 
         
     """
     st.image("https://raw.githubusercontent.com/209614-student/streamlit_iWakka/master/iwakka.png",

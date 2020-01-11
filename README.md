@@ -8,6 +8,6 @@ Me and my friends from University tested this device in hospital. During this re
 This project is the next step for easier assessment of patient indicators, remotely, their statistical analysis and visualization. It can also be used to diagnose the condition of a trainee.
 This is prototype software for evaluation results from the actual use of the iWakka device.
 
-This is link to the app:
-https://iwakka-therapy.herokuapp.com/  
+
+[Link to Application](https://iwakka-therapy.herokuapp.com/)
 
