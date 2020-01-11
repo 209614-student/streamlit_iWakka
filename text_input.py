@@ -1,13 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Thu Nov 14 17:03:56 2019
-
-@author: anna
-"""
-
 import streamlit as st
-import numpy as np
 import pandas as pd
 
 def text_input():
@@ -24,7 +17,7 @@ def text_input():
     )
     for i in ID:
         if option == i:
-            title = st.text_input(('You can provide some notes %s')%(i))
+            notes = st.text_input(('You can provide some notes %s')%(i))
 #           ade1= st.slider('How much {} is motivaed?'.format(i))
             ade11= st.slider('How much {} is motivated'.format(i),
                         0, 100)
@@ -45,5 +38,15 @@ def text_input():
 #            data = {i : [adek]}
 #            data=pd.DataFrame.from_dict(data, orient='columns', dtype=None)
 #            st.show(data)
-            
-            
+            data = [[i, ade11, age2, age3, age4, notes]] 
+  
+# Create the pandas DataFrame 
+            df = pd.DataFrame(data, columns = ['ID', 'Motivation', 'Condition', 'Complains', 'Tiring', 'Notes']) 
+
+          
+            if st.button('append'):
+                with open('notes.csv','a') as fd:
+                     df.to_csv(fd, header=False)
+            g=pd.read_csv('notes.csv')
+            if st.checkbox('show data'):
+                st.write('data', g)

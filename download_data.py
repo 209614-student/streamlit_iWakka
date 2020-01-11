@@ -175,7 +175,6 @@ def data_processing(patient_ID):
     def nwm():
         y=[]
         Y1=[]
-#        result_scheets= find_data(str(patient_ID ))
         for i in result_sheets:
             a=computed(i)['Total']
             a=np.round(a,3)
@@ -205,11 +204,15 @@ def download_data():
     if button:
        download_dataraw()
     st.write ('Atfter downloading data, you can press the button below to start processing them!')   
-    button2 = st.button('START PROCESSING DATA')
-    
     patient_IDs= ['BKZI', 'MAMCZ', 'Anna Dzialak', 'ASCZ', 'BBZI', 'BMCZ'
-             , 'DMCZ', 'EKZI', 'ELCZ', 'HKZI','JKCZ', 'JRCZ', 'JSCZ' , 'KKZI', 
-             'MBCZ', 'MMCZ', 'MPCZ', 'RKZI', 'SBZI' , 'UNZI', 'ZPZI']
+     , 'DMCZ', 'EKZI', 'ELCZ', 'HKZI','JKCZ', 'JRCZ', 'JSCZ' , 'KKZI', 
+     'MBCZ', 'MMCZ', 'MPCZ', 'RKZI', 'SBZI' , 'UNZI', 'ZPZI']
+    a =st.text_input('If list does not contain any ID, you can add it')
+    patient_IDs.append(a)    
+    c =st.checkbox('Show existing patient ID lists')
+    if c:
+        st.show(patient_IDs)
+    button2 = st.button('START PROCESSING DATA')
     if button2:
        for i in patient_IDs:
            data_processing(i)
