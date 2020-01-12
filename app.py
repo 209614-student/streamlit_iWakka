@@ -34,6 +34,10 @@ def load_homepage() -> None:
     st.write("You can judge patient condition accroding to provided data")         
   
 def create_layout() -> None:
+    """
+    Create the layout of dashboard
+    
+    """
 
     st.sidebar.title("Menu")
     app_mode = st.sidebar.selectbox("Please select a page", [' I. Homepage',
