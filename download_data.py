@@ -235,7 +235,22 @@ def data_processing(patient_ID : str) ->str:
                 
         return evaluation
     
-    def nwm():
+    def nwm()-> None:
+        """
+        
+        Returns:
+        -----------
+        y: list
+            list of number - AGF score from every single measurement
+            
+        Y1:list
+            list of numbers with the same length as the length of the AGF list
+                
+        patient_ID : str
+            string of currently processed patient
+        
+            
+        """
         y=[]
         Y1=[]
         for i in result_sheets:
