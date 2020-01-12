@@ -6,7 +6,7 @@ import pandas as pd
 import streamlit as st
 
 def rank_of_patient():
-        """
+    """
     Create the layout after the data has succesfully loaded, adding buttons and widgets to this  " V. Rank of patient" dashboard's section
     
     
