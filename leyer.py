@@ -5,6 +5,17 @@ import altair as alt
 import streamlit as st
 
 def leyer() -> None:
+    """
+    Create the layout after the data has succesfully loaded, adding buttons and widgets to this  "III. Statistic Data"  dashboard's section
+    
+    
+    Returns:
+    -----------
+    chart: chart
+        chart to visualize the AGF result for each day of therapy using the altair library
+    
+    
+    """
     def get_UN_data() -> None :
         df = pd.read_csv('./data/document1.csv')
         return df.set_index("ID")
@@ -19,7 +30,7 @@ def leyer() -> None:
             data = pd.melt(data, id_vars=["index"]).rename(
                 columns={"index": "day", "value": "AGF score"}
             )
-            a =   alt.Chart(data).mark_bar().encode(
+            chart =   alt.Chart(data).mark_bar().encode(
                             x=alt.Y('day:O', sort = None),
                             y=alt.Y("AGF score:Q"),
                             color=alt.condition(
@@ -29,6 +40,6 @@ def leyer() -> None:
                                     )
                             ).properties(width=600)
            
-            st.write("Chart", a)
+            st.write("Chart", chart)
                             
             
