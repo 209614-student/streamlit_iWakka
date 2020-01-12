@@ -6,6 +6,17 @@ import pandas as pd
 import streamlit as st
 
 def rank_of_patient():
+        """
+    Create the layout after the data has succesfully loaded, adding buttons and widgets to this  " V. Rank of patient" dashboard's section
+    
+    
+    Returns:
+    -----------
+    chart: chart
+        chart to visualize and compare the AGF results for selected patients 
+    
+    
+    """
     def get_UN_data():
             df = pd.read_csv('./data/document1.csv')
             df['Total']=df.sum(axis = 1, skipna = True)
