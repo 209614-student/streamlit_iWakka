@@ -10,7 +10,7 @@ import numpy as np
 
 def download_dataraw() -> None:
     """
-    Download data form gmail server into ./data file
+    Download data form gmail server into ./data folder
     
     
     Returns:
@@ -19,7 +19,7 @@ def download_dataraw() -> None:
         a list of strings which are name of downloaded .csv file 
     
     files 
-        saving .csv files in ./data file
+        saving .csv files in ./data folder
     
     """
     st.write("It can be take some minutes")
@@ -97,7 +97,21 @@ def data_processing(patient_ID : str) ->str:
 
     st.write("It can be take some minutes")
     CODE_SHEET = pd.read_excel('./data/code_ocena_1.xlsx')
-    def find_data(patient_ID):
+    def find_data(patient_ID: str) ->str:
+        """
+   
+        Parameters:
+        -----------
+        patient_ID : str
+                The nick of patient      
+                
+        Returns:
+        -----------                
+        
+        list
+            list of loaded .csv files by pandas.read_csv command from ./data folder
+            
+        """
         path='./data/*'    
         files = glob.glob(path)
         file_list = []
@@ -114,7 +128,23 @@ def data_processing(patient_ID : str) ->str:
         return result_sheets    
     result_sheets=find_data(str(patient_ID))
         
-    def computed(result_sheet):
+    def computed(result_sheet:list) -> list:
+        """
+        The function returns a list containing the AGF value, each number corresponds to one measurement, i.e. the result of one day
+        Function usues code_ocena_1.xlsx temlete due to measure AGF value only from this part wchich corresponds with grasping and releasing movements
+        
+        Parameters:
+        -----------
+     
+        list
+            list of loaded .csv files by pandas.read_csv command from ./data folder
+        
+         Returns:
+        ---------
+        list
+            list of number - AGF score from every single measurement
+                
+        """
         deviation = abs(result_sheet['value[g]'] - result_sheet['target[g]'])
         sampling_time = []
         for i in result_sheet['time[s]'].index:
