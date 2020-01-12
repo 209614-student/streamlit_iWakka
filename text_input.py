@@ -5,7 +5,11 @@ import streamlit as st
 import pandas as pd
 
 def text_input() -> None:
-    """ Take some notes about selected patient and specify the level of motivation anf fatigue on a 0-100 scale
+    """
+  
+    Create the layout, adding buttons and widgets to this  ' IV. Notes'  dashboard's section
+   
+    Take some notes about selected patient and specify the level of motivation anf fatigue on a 0-100 scale
     
     Returns:
     -----------

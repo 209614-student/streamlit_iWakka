@@ -10,7 +10,7 @@ import numpy as np
 
 def download_dataraw() -> None:
     """
-    Download data form gmail server into ./data folder
+    Download data from gmail server into ./data folder
     
     
     Returns:
@@ -141,7 +141,7 @@ def data_processing(patient_ID : str) ->str:
         
          Returns:
         ---------
-        list
+        evaluation: list
             list of number - AGF score from every single measurement
                 
         """
@@ -238,6 +238,8 @@ def data_processing(patient_ID : str) ->str:
     def nwm()-> None:
         """
         
+        
+        
         Returns:
         -----------
         y: list
@@ -273,6 +275,10 @@ def data_processing(patient_ID : str) ->str:
 
 
 def download_data() -> None :
+    """
+    Create the layout after the data has succesfully loaded, adding buttons and widgets to this  "II. Download data"  dashboard's section
+    
+    """
     st.header(" It's actually first step to start process data of your patient.")
     st.header(" Just follow the instruction!")
     st.markdown("Hi! It's fisrt step! Just click the bottom below and download data!")
