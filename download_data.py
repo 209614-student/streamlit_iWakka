@@ -22,7 +22,7 @@ def download_dataraw() -> None:
         saving .csv files in ./data folder
     
     """
-    st.write("It can be take some minutes")
+    st.write("To mozw potrwac kilka minut")
     userName = 'sterowanierobotow2@gmail.com' #gmail login
     passwd = 'IloveiWakka!!!' #gmail password
     detach_dir = '.'
@@ -282,6 +282,7 @@ def download_data() -> None :
 #    st.header(" ")
     st.header(" W tej sekcji mozesz pobrac dane!")
     st.markdown("Nacisnij przycisk ponizej aby pobrac dane!")
+    st.write("Dane sa juz pobrane wiec mozesz dzis pominac ten krok")
     
     button =st.button('Pobierz dane')
     if button:
