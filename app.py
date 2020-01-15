@@ -17,21 +17,16 @@ def load_homepage() -> None:
     """
     st.image("https://raw.githubusercontent.com/209614-student/streamlit_iWakka/master/iwakka.png",
              use_column_width=True)
-    st.markdown("> It' s a dashboard do analize data!")
-    st.write("Hello! This dashboard will help you to analize data from our device iWakka "
-             "This app will help your patient to recovery ")
-    st.write("Here are some step to process data: ")
-    st.header(" II. Download data")
-    st.write("It is first step for you to click bottom and gather data from e-mail")
-    
-    st.header(" III. In this section you can provide some notes")
-    st.write("It can be useful for you to collect notes concerning your patient")   
-       
-    st.header(" IV. Expore AGF score for patient")
-    st.write("You can judge patient condition accroding to provided data")      
+    st.markdown("> W tej alikacji mozesz przeanalizowac dane pochodzace  z terapii iWakka")
 
-    st.header(" V. You will find rank if patients")
-    st.write("You can judge patient condition accroding to provided data")         
+    st.write("W aplikacji znajduje sie kilka sekcji: ")
+    st.header("II. Pobierz dane")
+    
+    st.header(" III. Wprowadz notatki")
+       
+    st.header(" IV. Zobacz dane")
+
+    st.header(" V. Porownaj pacjentow")
   
 def create_layout() -> None:
     """
@@ -39,22 +34,22 @@ def create_layout() -> None:
     
     """
 
-    st.sidebar.title("Menu")
-    app_mode = st.sidebar.selectbox("Please select a page", [' I. Homepage',
-                                                             "II. Download data" ,
-                                                             "III. Statistic Data",
-                                                             ' IV. Notes',
-                                                             " V. Rank of patient"])
+    st.sidebar.title("Wybierz sekcje")
+    app_mode = st.sidebar.selectbox("Please select a page", [' I. Strona domowa',
+                                                             "II. Pobierz dane",
+                                                             "III. Wprowadz notatki",
+                                                             " IV. Zobacz dane",
+                                                            " V. Porownaj pacjentow"])
     
-    if app_mode == ' I. Homepage':
+    if app_mode == ' I. Strona domowa':
        load_homepage()       
-    elif app_mode == "III. Statistic Data":
+    elif app_mode == " IV. Zobacz dane":
         leyer.leyer()        
-    elif app_mode == "II. Download data":
+    elif app_mode == "II. Pobierz dane":
          download_data.download_data()      
-    elif app_mode == ' IV. Notes':
+    elif app_mode == "III. Wprowadz notatki":
        text_input.text_input()
-    elif app_mode == " V. Rank of patient":
+    elif app_mode == " V. Porownaj pacjentow":
        rank_of_patient.rank_of_patient()
         
     

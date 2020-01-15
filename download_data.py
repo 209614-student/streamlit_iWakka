@@ -279,26 +279,27 @@ def download_data() -> None :
     Create the layout after the data has succesfully loaded, adding buttons and widgets to this  "II. Download data"  dashboard's section
     
     """
-    st.header(" It's actually first step to start process data of your patient.")
-    st.header(" Just follow the instruction!")
-    st.markdown("Hi! It's fisrt step! Just click the bottom below and download data!")
-    button =st.button('START DOWNLOAD DATA')
+#    st.header(" ")
+    st.header(" W tej sekcji mozesz pobrac dane!")
+    st.markdown("Nacisnij przycisk ponizej aby pobrac dane!")
+    
+    button =st.button('Pobierz dane')
     if button:
        download_dataraw()
-    st.write ('Atfter downloading data, you can press the button below to start processing them!')  
+    st.write ('Aby przeanalizowac dane, musisz nacisnac ponizszy przycisk')  
     
     patient_IDs= ['BKZI', 'MAMCZ', 'Anna Dzialak', 'ASCZ', 'BBZI', 'BMCZ', 'KKZI'
                     , 'DMCZ', 'EKZI', 'ELCZ', 'HKZI','JKCZ', 'JRCZ', 'JSCZ' , 
                       'MBCZ', 'MMCZ', 'MPCZ', 'RKZI', 'SBZI' , 'UNZI', 'ZPZI']
-    a =st.text_input('If list does not contain any ID, you can add it')
+    a =st.text_input('Jezeli lista nie zawiera jakiegos ID, mozesz go dodac tutaj')
     patient_IDs.append(a)    
-    c =st.checkbox('Show existing patient ID lists')
+    c =st.checkbox('Pokaz liste pacjentow')
     if c:
         st.show(patient_IDs)
-    button2 = st.button('START PROCESSING DATA')
+    button2 = st.button('Zacznij analizowac dane')
     if button2:
        for i in patient_IDs:
            data_processing(i)
     if st.checkbox('Show data'):
         d = pd.read_csv('./data/document1.csv', error_bad_lines=False)
-        st.write('data', d)
+        st.write('Pokaz dane', d)
