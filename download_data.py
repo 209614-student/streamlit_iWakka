@@ -281,8 +281,9 @@ def download_data() -> None :
     """
 #    st.header(" ")
     st.header(" W tej sekcji mozesz pobrac dane!")
+    st.header(" Na dzien dzisiejszy wszytskie dane sa juz pobrane przenalizowane, wiec mozesz pominac ten krok")
+
     st.markdown("Nacisnij przycisk ponizej aby pobrac dane!")
-    st.write("Dane sa juz pobrane wiec mozesz dzis pominac ten krok")
     
     button =st.button('Pobierz dane')
     if button:
