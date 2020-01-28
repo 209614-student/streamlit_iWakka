@@ -25,11 +25,14 @@ def load_homepage() -> None:
     st.header(" II. Download data")
     st.write("It is first step for you to click bottom and gather data from e-mail")
     
-    st.header(" III. In this section you can provide some notes")
+    st.header(" IIII. Statistic Data")
+    st.write("You can judge patient condition accroding to provided data")     
+         
+    st.header("  IV. AGF Indices")
+    st.write("Here you can analyse each chart")      
+      
+    st.header("  V. Notes")
     st.write("It can be useful for you to collect notes concerning your patient")   
-       
-    st.header(" IV. Expore AGF score for patient")
-    st.write("You can judge patient condition accroding to provided data")      
 
     st.header(" V. You will find rank if patients")
     st.write("You can judge patient condition accroding to provided data")         
