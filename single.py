@@ -1,116 +1,37 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+"""
+Created on Tue Jan 28 18:04:01 2020
 
-import email
-import imaplib
-import os
-import streamlit as st
+@author: anna
+"""
+import altair as alt
 import pandas as pd
+import streamlit as st
 import glob
-import numpy as np
 
-def download_dataraw() -> None:
-    """
-    Download data from gmail server into ./data folder
-    
-    
-    Returns:
-    -----------
-    fileName : str
-        a list of strings which are name of downloaded .csv file 
-    
-    files 
-        saving .csv files in ./data folder
-    
-    """
-    st.write("It can be take some minutes")
-    userName = 'sterowanierobotow2@gmail.com' #gmail login
-    passwd = 'IloveiWakka!!!' #gmail password
-    detach_dir = '.'
-    if 'data' not in os.listdir(detach_dir):
-        os.mkdir('data') 
-    
-    try:
-        imapSession = imaplib.IMAP4_SSL('imap.gmail.com')
-        typ, accountDetails = imapSession.login(userName, passwd)
-        if typ != 'OK':
-            raise
-    
-        imapSession.select('Inbox')
-        typ, data = imapSession.search(None, 'ALL')
-        if typ != 'OK':
-            
-            raise
-       
-        for msgId in data[0].split():
-            typ, messageParts = imapSession.fetch(msgId, '(RFC822)')
-     
-            emailBody = messageParts[0][1]
-            mail = email.message_from_bytes(emailBody)
-            subject = mail['subject']
-            if subject.find('tch')   > -1:
-                for part in mail.walk():
-                    if part.get_content_maintype() == 'multipart':
-                        continue
-                    if part.get('Content-Disposition') is None:
-                        continue
-                    fileName = part.get_filename()
-    
-                    if bool(fileName):
-                        filePath = os.path.join(detach_dir, 'data', fileName)
-                        if not os.path.isfile(filePath) :
-                            st.write (fileName)
-                            st.write(fileName)
-                            fp = open(filePath, 'wb')
-                            fp.write(part.get_payload(decode=True))
-                            fp.close()
-        imapSession.close()
-        imapSession.logout()
-    
-        st.write ('Done')
-        st.write ('Data has downloaded! Now you can press the button below to start processing them!')
-   
-    except :
-        st.write ('Not able to download all attachments.')
-        
-def data_processing(patient_ID : str) ->str: 
-    """ 
-    Processes data from ./data file to pandas DataFrame format and .csv file
-    
-    
-    Parameters:
-    -----------
-    patient_ID : str
-            The nick of patient
-    
-    Returns:
-    -----------
-    
-    Appends row to existing .csv file :
-    |  ID      |  day1    |  day2    |  day3     |  day4  | ... |  day18  |
-    |  ......  |  ......  |  .....   | .....     |  ..... | ... |  ....   |
-    |  ......  |  ......  |  .....   | .....     |  ..... | ... |  ....   |    
-    |  ......  |  ......  |  .....   | .....     |  ..... | ... |  ....   |  
-    |  BKZI    |  18.34   |  14.14   | 14.16     |  25.55 | ... |  12.13  |  
-    
-    """
-    
+def AGF_indices():
 
+    patient_IDs= ['BKZI', 'MAMCZ', 'Anna Dzialak', 'ASCZ', 'BBZI', 'BMCZ', 'KKZI'
+                    , 'DMCZ', 'EKZI', 'ELCZ', 'HKZI','JKCZ', 'JRCZ', 'JSCZ' , 
+                      'MBCZ', 'MMCZ', 'MPCZ', 'RKZI', 'SBZI' , 'UNZI', 'ZPZI']
+    mode = st.selectbox("Please select ID", patient_IDs)
     st.write("It can be take some minutes")
     CODE_SHEET = pd.read_excel('./data/code_ocena_1.xlsx')
     def find_data(patient_ID: str) ->str:
         """
-   
+    
         Parameters:
         -----------
         patient_ID : str
                 The nick of patient      
-                
+    
         Returns:
         -----------                
-        
+    
         list
             list of loaded .csv files by pandas.read_csv command from ./data folder
-            
+    
         """
         path='./data/*'    
         files = glob.glob(path)
@@ -118,16 +39,20 @@ def data_processing(patient_ID : str) ->str:
         for i, file_name in enumerate(files):
             file_list.append(file_name)
             file_list=sorted(file_list)
-                        
+    
         result_sheets = []
         for file_path in file_list:
             if  file_path.find(str(patient_ID)) > -1: 
                 result_sheet = pd.read_csv(file_path )
                 result_sheets.append(result_sheet )
     
-        return result_sheets    
-    result_sheets=find_data(str(patient_ID))
-        
+        return result_sheets 
+    
+    
+    if mode:
+        patient_ID = mode
+        result_sheets=find_data(str(patient_ID))
+    
     def computed(result_sheet:list) -> list:
         """
         The function returns a list containing the AGF value, each number corresponds to one measurement, i.e. the result of one day
@@ -135,7 +60,7 @@ def data_processing(patient_ID : str) ->str:
         
         Parameters:
         -----------
-     
+         
         list
             list of loaded .csv files by pandas.read_csv command from ./data folder
         
@@ -151,7 +76,7 @@ def data_processing(patient_ID : str) ->str:
             if i < 1300:
                 sampling_time.append(result_sheet['time[s]'][i+1]-result_sheet['time[s]'][i])
         sampling_time.append(0)
-    
+        
         error_area = []
         for i in result_sheet['time[s]'].index:
             if i < 1300:
@@ -232,73 +157,28 @@ def data_processing(patient_ID : str) ->str:
         for eval_unit in evaluation:
             if eval_unit != 'IC' and eval_unit != 'Total':
                 evaluation[eval_unit] = evaluation[eval_unit]/3
-                
-        return evaluation
+        print(evaluation['IC'],evaluation['CC1'],evaluation['Total' ] )  
+        a= list(evaluation.values())
+        print (a)
+        return  a
+           
+    a=computed(result_sheets[1])
     
-    def nwm()-> None:
-        """
+    
+    for i in result_sheets:
+        a=computed(i)    
+        source = pd.DataFrame({
+            'AGF Indices': ['IC', 'CC1', 'CC2', 'CC3', 'CC4', 'CC5', 'CC6', 'CC7', 'CC8', 'CC9', 'CC10', 'EC1', 
+                         'EC2', 'EC3', 'EC4', 'EC5', 'EC6', 'EC7', 'EC8', 'EC9', 'EC10', 'Total'] ,
+            'AGF Score': a
+        })
+        c = alt.Chart(source).mark_bar().encode(
+            x=alt.X('AGF Indices', sort=None),
+            y='AGF Score'
+        )
+          
+        st.write('Data', c)
         
-        
-        
-        Returns:
-        -----------
-        y: list
-            list of number - AGF score from every single measurement
             
-        Y1:list
-            list of numbers with the same length as the length of the AGF list
-                
-        patient_ID : str
-            string of currently processed patient
         
-            
-        """
-        y=[]
-        Y1=[]
-        for i in result_sheets:
-            a=computed(i)['Total']
-            a=np.round(a,3)
-            y.append(a)
-            Y1=[i for i in range(1,(len(y)+1))]  
-        return y, Y1, patient_ID
-    
-    y, Y1, patient_ID= nwm()
-       
-    data = dict()
-    for x in range(1,len(y)):
-        data['day %i'%x]=y[x-1]
-  
-    df = pd.DataFrame(data, index =    [patient_ID]              )
-      
-    with open('./data/document1.csv','a') as fd:
-        df.to_csv(fd, header=False)
-
-
-def download_data() -> None :
-    """
-    Create the layout after the data has succesfully loaded, adding buttons and widgets to this  "II. Download data"  dashboard's section
-    
-    """
-    st.header(" It's actually first step to start process data of your patient.")
-    st.header(" Just follow the instruction!")
-    st.markdown("Hi! It's fisrt step! Just click the bottom below and download data!")
-    button =st.button('START DOWNLOAD DATA')
-    if button:
-       download_dataraw()
-    st.write ('Atfter downloading data, you can press the button below to start processing them!')  
-    
-    patient_IDs= ['BKZI', 'MAMCZ', 'Anna Dzialak', 'ASCZ', 'BBZI', 'BMCZ', 'KKZI'
-                    , 'DMCZ', 'EKZI', 'ELCZ', 'HKZI','JKCZ', 'JRCZ', 'JSCZ' , 
-                      'MBCZ', 'MMCZ', 'MPCZ', 'RKZI', 'SBZI' , 'UNZI', 'ZPZI']
-    a =st.text_input('If list does not contain any ID, you can add it')
-    patient_IDs.append(a)    
-    c =st.checkbox('Show existing patient ID lists')
-    if c:
-        st.show(patient_IDs)
-    button2 = st.button('START PROCESSING DATA')
-    if button2:
-       for i in patient_IDs:
-           data_processing(i)
-    if st.checkbox('Show data'):
-        d = pd.read_csv('./data/document1.csv', error_bad_lines=False)
-        st.write('data', d)
+        

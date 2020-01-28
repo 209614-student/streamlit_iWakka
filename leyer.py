@@ -6,7 +6,7 @@ import streamlit as st
 
 def leyer() -> None:
     
-    st.header(" Wybierz pacjenta aby przeslidzic efekty jego terapii")
+    st.header(" Select the patient ID and see how effective therapy is")
     """
     Create the layout after the data has succesfully loaded, adding buttons and widgets to this  "III. Statistic Data"  dashboard's section
     
