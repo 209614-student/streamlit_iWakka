@@ -11,6 +11,7 @@ import streamlit as st
 import glob
 
 def AGF_indices():
+    st.header(" This panel alows you to analize every chart from therapy for selected patient")
 
     patient_IDs= ['BKZI', 'MAMCZ', 'Anna Dzialak', 'ASCZ', 'BBZI', 'BMCZ', 'KKZI'
                     , 'DMCZ', 'EKZI', 'ELCZ', 'HKZI','JKCZ', 'JRCZ', 'JSCZ' , 
