@@ -9,6 +9,7 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 import glob
+import xlrd
 
 def AGF_indices():
     st.header(" This panel alows you to analize every chart from therapy for selected patients")
