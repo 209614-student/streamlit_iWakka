@@ -7,7 +7,7 @@ import streamlit as st
 
 def rank_of_patient():
     
-    st.header(" Here you can compare effects in selected patients")
+    st.header(" You can compare results for selected patients")
     """
     Create the layout after the data has succesfully loaded, adding buttons and widgets to this  " V. Rank of patient" dashboard's section
     

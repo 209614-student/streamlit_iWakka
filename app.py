@@ -16,26 +16,25 @@ def load_homepage() -> None:
            Contains description how app works 
         
     """
-    st.image("https://raw.githubusercontent.com/209614-student/streamlit_iWakka/master/iwakka.png",
+    st.image("iwakka.png",
              use_column_width=True)
-    st.markdown("> W tej alikacji mozesz przeanalizowac dane pochodzace  z terapii iWakka")
-    st.write("Hello! This dashboard will help you to analize data from our device iWakka "
-             "This app will help your patient to recovery ")
+ 
+    st.header("Hello! This dashboard will help you to analize data from iWakka device")
     st.write("Here are some step to process data: ")
     st.header(" II. Download data")
-    st.write("It is first step for you to click bottom and gather data from e-mail")
+    st.write("Here you can download data")
     
-    st.header(" IIII. Statistic Data")
+    st.header(" III. Statistic Data")
     st.write("You can judge patient condition accroding to provided data")     
          
-    st.header("  IV. AGF Indices")
+    st.header("IV. AGF Indices")
     st.write("Here you can analyse each chart")      
       
     st.header("  V. Notes")
     st.write("It can be useful for you to collect notes concerning your patient")   
 
-    st.header(" V. You will find rank if patients")
-    st.write("You can judge patient condition accroding to provided data")         
+    st.header(" VI. Rank of patient")
+    st.write("You can compare results for selected patients" )         
   
 def create_layout() -> None:
     """

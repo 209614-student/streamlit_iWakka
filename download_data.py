@@ -279,9 +279,9 @@ def download_data() -> None :
     Create the layout after the data has succesfully loaded, adding buttons and widgets to this  "II. Download data"  dashboard's section
     
     """
-    st.header(" It's actually first step to start process data of your patient.")
+    st.header(" It's  first step to start process data of your patient.")
     st.header(" Just follow the instruction!")
-    st.markdown("Hi! It's fisrt step! Just click the bottom below and download data!")
+    st.markdown("Click the bottom below and download data!")
     button =st.button('START DOWNLOAD DATA')
     if button:
        download_dataraw()

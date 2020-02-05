@@ -25,7 +25,7 @@ def text_input() -> None:
     
     """
     
-    st.header(" Hello again! In this section you cen provide some notes regarding patient")
+    st.header(" Hello again! In this section you can provide some notes regarding patient")
     st.markdown("Some notes can be useful for you, it's too hard to remeber all inormation about your patient :)")
     
     
